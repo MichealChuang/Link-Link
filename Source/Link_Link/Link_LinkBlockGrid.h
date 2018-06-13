@@ -23,27 +23,33 @@ class ALink_LinkBlockGrid : public AActor
 public:
 	ALink_LinkBlockGrid();
 
+	// Begin AActor interface
+	virtual void BeginPlay() override;
+
+	void ReceiveBlock(class ALink_LinkBlock* TempBlock);
+
+	void GameOver();
+public:
+	//How many blocks the Grid have
+	int32 NumBlocks;
+
 	/** How many blocks have been clicked */
-	int32 Score;
+	int32 time;
 
 	/** Number of blocks along each side of grid */
-	UPROPERTY(Category=Grid, EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
 	int32 Size;
 
 	/** Spacing of blocks */
-	UPROPERTY(Category=Grid, EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
 	float BlockSpacing;
 
-protected:
-	// Begin AActor interface
-	virtual void BeginPlay() override;
-	// End AActor interface
+	class ALink_LinkBlock* FirstBlock;
+	class ALink_LinkBlock* SecondBlock;
 
-public:
+	FTimerHandle GameOverHandle;
 
-	/** Handle the block being clicked */
-	void AddScore();
-
+	class ULink_LinkGameInstance* GI;
 	/** Returns DummyRoot subobject **/
 	FORCEINLINE class USceneComponent* GetDummyRoot() const { return DummyRoot; }
 	/** Returns ScoreText subobject **/
